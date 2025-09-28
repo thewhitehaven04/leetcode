@@ -9,21 +9,21 @@ function threeSum(nums: number[]): number[][] {
   const sorted = nums.sort((a, b) => a - b);
   const triplets: number[][] = [];
   for (let i = 0; i < sorted.length - 2; i++) {
-    const arr = sorted.slice(i + 1);
-    
     const first = sorted[i];
     // right => left
-    let leftIndex = arr[0];
-    let rightIndex = arr.length - 1;
+    let leftIndex = i+1;
+    let rightIndex = sorted.length - 1;
 
     while (leftIndex < rightIndex) {
-      if (arr[leftIndex] + arr[rightIndex] === -first) {
-        if (!triplets.find((triplet) => (triplet[0] === first && triplet[1] === arr[leftIndex] && triplet[2] === arr[rightIndex]))) {
-            triplets.push([first, arr[leftIndex], arr[rightIndex]]);
+      const left = sorted[leftIndex]
+      const right = sorted[rightIndex]
+      if (left + right === -first) {
+        if (!triplets.find((triplet) => (triplet[0] === first && triplet[1] === left && triplet[2] === right))) {
+            triplets.push([first, left, right]);
         }
         leftIndex += 1;
         rightIndex -= 1;
-      } else if (arr[leftIndex] + arr[rightIndex] > -first) {
+      } else if (left + right > -first) {
         rightIndex -= 1;
       } else {
         leftIndex += 1;
