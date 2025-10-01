@@ -17,11 +17,11 @@ function findCircleNum(isConnected: number[][]): number {
     return items;
   });
 
-  const queue: number[] = [];
+  const stack: number[] = [];
 
-  const enqueue = (item: number) => queue.push(item);
-  const dequeue = () => queue.shift();
-  const isEmpty = () => queue.length === 0;
+  const push = (item: number) => stack.push(item);
+  const pop = () => stack.pop();
+  const isEmpty = () => stack.length === 0;
 
   let componentCount = 0;
   for (let i = 0; i < adjacencyList.length; i++) {
@@ -33,17 +33,17 @@ function findCircleNum(isConnected: number[][]): number {
 
     adjacencyList[i].forEach((item) => {
       if (item !== i) {
-        enqueue(item);
+        push(item);
       }
     });
 
     do {
-      const adjacentSetIndex = dequeue();
+      const adjacentSetIndex = pop();
       if (adjacentSetIndex) {
         while (adjacencyList[adjacentSetIndex].length > 0) {
           const adjacentItem = adjacencyList[adjacentSetIndex].shift();
           if (adjacentItem && adjacentItem !== i) {
-            enqueue(adjacentItem);
+            push(adjacentItem);
           }
         }
       }
